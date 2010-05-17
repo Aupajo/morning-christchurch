@@ -4,7 +4,7 @@ require 'twitter'
 set :title, 'Morning, Christchurch'
 
 get '/' do
-  tweets = Twitter::Search.new('morning from:danrandow').fetch.results
+  tweets = Twitter::Search.new('morning OR christchurch from:danrandow').fetch.results
   @pics = tweets.map do |t|
     photo_urls = t.text.match(/http:\/\/yfrog\.com\/[a-z0-9]+/).to_a
     next if photo_urls.empty?
