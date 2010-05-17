@@ -4,6 +4,7 @@
     %meta{ :charset => 'utf-8' }
     %title=options.title
     %link{ :href => '/stylesheet.css', :rel => 'stylesheet', :type => 'text/css', :charset => 'utf-8' }
+    %link{ :href => '/feed.xml', :rel => 'alternate', :type => 'application/rss+xml', :title => 'Feed' }
   %body
     %h1=options.title
     -@pics.each do |pic|
@@ -14,3 +15,4 @@
         %p=pic[:tweet]
     #footer
       &mdash; Powered by <a href="http://twitter.com/danrandow">@danrandow</a>.
+      Fresh <a href="/feed.xml">Atom feed</a> available.

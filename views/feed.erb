@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+ 
+ <title><%= options.title %></title>
+ <link href="<%= request.url %>" rel="self"/>
+ <link href="<%= site_url %>"/>
+
+ <updated><%= xmlschema_time @pics.first[:date] %></updated>
+ <id><%= site_url %></id>
+ <author>
+   <name>Dan Randow</name>
+ </author>
+ 
+ <% @pics.each do |pic| %>
+ <entry>
+   <title><%= pic[:date].strftime('%a, %d %b %Y') %></title>
+   <link href="<%= site_url %>"/>
+   <updated><%= xmlschema_time pic[:date] %></updated>
+   <id><%= xmlschema_time pic[:date] %></id>
+   <content type="html">
+    <%= escape_html pic[:urls].map { |url| "<img src='#{url}'/>" }.join("\n") %>
+    &lt;p&gt;<%= pic[:tweet] %>&lt;/p&gt;
+   </content>
+ </entry>
+ <% end %>
+ 
+</feed>
