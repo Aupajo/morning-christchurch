@@ -1,7 +1,9 @@
 require 'sinatra'
 require 'twitter'
+require 'tzinfo'
 
 set :title, 'Morning, Christchurch'
+set :timezone, TZInfo::Timezone.get('Pacific/Auckland')
 
 helpers do
   def fetch_pics
@@ -11,10 +13,14 @@ helpers do
       next if photo_urls.empty?
       {
         :urls => photo_urls.map { |url| url << ':iphone' }, # to retreive yFrog iPhone-sized photos
-        :date => DateTime.parse(t.created_at),
+        :date => to_timezone(DateTime.parse(t.created_at)),
         :tweet => t.text
       }
     end.compact
+  end
+  
+  def to_timezone(datetime)
+    options.timezone.utc_to_local(datetime.new_offset(0))
   end
   
   def site_url
